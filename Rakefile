@@ -50,7 +50,8 @@ Cucumber::Rake::Task.new(:tag_no_rerun) do |task|
                         "--format html  --out cucumber.html",
                         "--format json  --out cucumber.json",
                         "--format rerun --out rerun.txt",
-                        "--format pretty --color"]
+                        "--format pretty --color",
+                        ENV['FEATURE']]
 end
 
 task :tag do
