@@ -26,15 +26,29 @@ end
   end
 end
 
-То /^на странице результатов показано >= (\d+) объявлений$/ do |num|
+То /^на странице результатов показан(о|) (>=|ровно) (\d+) объявлен(ий|ия)$/ do |a, clause, num, b|
   on SearchResultsPage do |page|
-    page.get_results_size.should >= num.to_i
+    case clause
+    when ">="
+      page.get_results_size.should >= num.to_i
+    when "ровно"
+      page.get_results_size.should == num.to_i
+    else
+      raise "Нет условия '#{clause}'"
+    end
   end
 end
 
-То /^на странице результатов показано >= (\d+) дилера$/ do |num|
+То /^на странице результатов показан(о|) (>=|ровно) (\d+) дилер(а|)$/ do |a, clause, num, b|
   on SearchCompaniesResultsPage do |page|
-    page.get_results_size.should >= num.to_i
+    case clause
+    when ">="
+      page.get_results_size.should >= num.to_i
+    when "ровно"
+      page.get_results_size.should == num.to_i
+    else
+      raise "Нет условия '#{clause}'"
+    end
   end
 end
 
@@ -59,6 +73,12 @@ end
 Допустим /^у каждого дилера "(.*?)" >= (\d+)$/ do |key, expected|
   dealers_soft_assert do |ad|
     ad.get_parameter(key).to_i.should >= expected.to_i
+  end
+end
+
+Допустим /^у первого дилера "(.*?)" равно "(.*?)"$/ do |key, expected|
+  on SearchCompaniesResultsPage do |page|
+    page.get_results[0].get_parameter(key).should eq(expected)
   end
 end
 

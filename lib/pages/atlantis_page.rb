@@ -20,8 +20,8 @@ class AtlantisMainPage
 
   def open_category category
     self.div_element(class: "x-tree-root-node").
-         link_element(class: "x-tree-node-anchor", text: category).
-            when_present.click
+         div_element(class: /x-tree-node-(collapsed|leaf)/, text: category).
+         link_element(class: "x-tree-node-anchor").when_present.click
   end
 
 end

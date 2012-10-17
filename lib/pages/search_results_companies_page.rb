@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 class SearchCompaniesResultsPage < SearchResultsPage
   include PageObject
 
@@ -31,6 +32,8 @@ class Dealer
 
   def get_parameter key
     case key
+    when "Название"
+      @element.div(class: "dealerName").text
     when "Количество объявлений"
       @element.div(class: "dealerTel", index: 1).
                text[/Количество объявлений: (.+)/, 1].to_i

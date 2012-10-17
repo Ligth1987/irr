@@ -82,3 +82,36 @@ end
     page.accept_ad 1
   end
 end
+
+То /^открыта страница списка компаний$/ do
+  on AtlantisCompaniesListPage do |page|
+    page.wait_for_page_to_be_opened
+  end
+end
+
+Допустим /^я удаляю все компании с именем "(.*?)"$/ do |name|
+  on AtlantisCompaniesListPage do |page|
+    while page.has_company_with_name?(name)
+      page.delete_company name
+    end
+  end
+end
+
+Когда /^я создаю новую компанию со следующими параметрами:$/ do |table|
+  on AtlantisCompaniesListPage do |page|
+    page.open_new_company_dialog
+  end
+
+  on AtlantisNewCompanyPage do |page|
+    table.hashes.each do |hash|
+      page.set_parameter hash
+    end
+    page.save_page
+  end
+end
+
+То /^компания с именем "(.*?)" отображена в конце списка$/ do |name|
+  on AtlantisCompaniesListPage do |page|
+    page.has_company_with_name?(name).should eq(true)
+  end
+end
