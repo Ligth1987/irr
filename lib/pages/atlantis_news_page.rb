@@ -135,7 +135,13 @@ class AtlantisNewsAddPage
     @browser.execute_script("document.getElementById('#{el_id}').setAttribute('style', '')")
     photo_element.file_field_element.value="/tmp/logo_irr.png"
     photo_element.element.button(text: "Закачать").click
-    Watir::Wait.until {photo_element.element.imgs.size > 0}
+    begin
+      Watir::Wait.until(10) {photo_element.element.imgs.size > 0}
+    rescue Watir::Wait::TimeoutError
+      # картинка не была загружена, читаем текст ошибки
+      error_text = self.div_element(class: "ux-up-icon-failed").when_present.attribute("qtip")
+      raise "Ошибка при загрузке картинки: '#{error_text}'"
+    end
   end
 
   def save_ad
