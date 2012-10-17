@@ -27,12 +27,14 @@ class MainPage
 
   def login
     self.wait_for_loaders_to_disappear
-    self.login_button_element.when_present.click
+    self.do_logout if user_logged_in?
+    Watir::Wait.until {self.login_button_element.exists?}
+    self.login_button_element.click
   end
 
   def open_personal_cabinet
     self.wait_for_loaders_to_disappear
-    self.user_name_element.when_present.click
+    self.user_name_element.when_present.link_element.click
   end
 
   def user_logged_in?

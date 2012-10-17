@@ -4,6 +4,7 @@
   on MainPage do |page|
     page.open_personal_cabinet
   end
+  steps %Q{* открыт личный кабинет пользователя}
 end
 
 То /^открыт личный кабинет пользователя$/ do
