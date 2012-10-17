@@ -5,7 +5,7 @@ class AtlantisCompaniesListPage
   div :main, id: "doc-body"
 
   def wait_for_page_to_be_opened
-    self.span_element(class: "x-tab-strip-text", text: "Компании").when_present
+    self.span_element(class: "x-tab-strip-text", text: "Компании").when_present(20)
     # Ждём пока загрузятся компании
     Watir::Wait.until { 
       self.table_elements(class: "x-grid3-row-table").size > 0

@@ -28,6 +28,7 @@ end
   on AtlantisMainPage do |page|
     long_category.split(' - ').each do |category|
       page.open_category category
+      sleep 1
     end
   end
 end
