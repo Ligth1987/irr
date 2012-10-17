@@ -18,10 +18,21 @@ class AtlantisMainPage
     Watir::Wait.until {self.div_element(id: "north").exists?}
   end
 
-  def open_category category
-    self.div_element(class: "x-tree-root-node").
-         div_element(class: /x-tree-node-(collapsed|leaf)/, text: category).
-         link_element(class: "x-tree-node-anchor").when_present.click
+  def open_category long_category
+    categories_num = long_category.split(' - ').size - 1
+    root = self.div_element(class: "x-tree-root-node")
+    long_category.split(' - ').each_with_index do |category, i|
+      unless i == categories_num
+        root.div_element(class: "x-tree-node-collapsed", text: category).
+             link_element(class: "x-tree-node-anchor").when_present.click
+        Watir::Wait.until { 
+          root.div_element(class: "x-tree-node-expanded", text: category).exists?
+        }
+      else
+        root.div_element(class: "x-tree-node-leaf", text: category).
+             link_element(class: "x-tree-node-anchor").when_present.click
+      end
+    end
   end
 
 end

@@ -26,10 +26,7 @@ end
 
 Допустим /^на БО я открываю страницу "(.*?)"$/ do |long_category|
   on AtlantisMainPage do |page|
-    long_category.split(' - ').each do |category|
-      page.open_category category
-      sleep 1
-    end
+    page.open_category long_category
   end
 end
 
