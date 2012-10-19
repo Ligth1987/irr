@@ -14,8 +14,16 @@ class AtlantisNewsListPage
   end
 
   def has_news? name
-    debugger
-    name
+    self.text_field_element(name: "title").value = name
+    self.text_field_element(name: "title").send_keys "\n"
+    begin
+      Watir::Wait.until {
+        self.div_element(class: "x-grid3-cell-inner", text: name).exists?
+      }
+      true
+    rescue
+      false
+    end
   end
 
 end
