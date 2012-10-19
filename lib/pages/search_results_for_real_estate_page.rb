@@ -17,8 +17,9 @@ class SearchResultsForRealEstatePage < SearchResultsPage
       attempts -= 1
       retry
     end
-    json = /var additionalPopupMenuParams = (.*);/.match(doc.css("script").inner_html)[1]
-    parsed_json = JSON.parse(json)
+    json = /var additionalPopupMenuParams = (.*);/.match(doc.css("script").inner_html)
+    return if json.size == 0
+    parsed_json = JSON.parse(json[1])
 
     banned_classes = %w[multy-list-table banner-listing-list dontSearch]
 
@@ -26,7 +27,7 @@ class SearchResultsForRealEstatePage < SearchResultsPage
       # Skip of it is a banner or bottom 'not found' part
       banned_class_found = false
       banned_classes.each do |banned_class|
-        if row['class'].include?(banned_class)
+        if not row['class'].nil? and row['class'].include?(banned_class)
           banned_class_found = true
           break
         end
@@ -36,6 +37,7 @@ class SearchResultsForRealEstatePage < SearchResultsPage
         # city data
         begin
           results.last['city'] = row.css('td.tdTxt > span.location')[0].content.strip!
+        rescue
         end
         next
       end

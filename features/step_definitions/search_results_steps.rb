@@ -425,7 +425,6 @@ end
 Допустим /^в списке фильтров показаны следующие фильтры:$/ do |table|
   on SearchResultsPage do |page|
     actual = page.get_all_filters
-
     unless actual == table.rows
       actual_table = Cucumber::Ast::Table.new(actual)
       expected_table = Cucumber::Ast::Table.new(table.rows)
@@ -442,7 +441,7 @@ end
       puts Diffy::Diff.new('/tmp/file1', '/tmp/file2', 
                            source:'files', diff: ['-w', '-U 10000']).to_s(:html)
       # Прячем оставшуюся таблицу
-       puts "<table style='display:none'><tbody><tr><td>"
+      puts "<table style='display:none'><tbody><tr><td>"
 
       # две пустых строчки комментариев
       # Из-за html кода ломается отображение контекста ошибки
