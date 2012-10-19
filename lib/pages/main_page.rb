@@ -139,8 +139,7 @@ class MainPage
   end
 
   def go_to_news_section section
-    debugger
-    go_to_news_section section
+    self.div_element(class: "ads_hot").link_element(link_text: section).click
   end
 
 end
@@ -149,7 +148,6 @@ class NewsListPage
   include PageObject
 
   def has_item? name
-    debugger
-    has_item? name
+    self.div_element(class: "stuffContentCols").link_element(link_text: name).exists?
   end
 end
