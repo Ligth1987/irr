@@ -18,21 +18,27 @@ end
   end
 end
 
+
 def assert_value_changed actual, expected, value1, value2, clause
-  case clause
-  when /увеличился на/
-    actual.to_i.should eq(expected.to_i + value1.to_i)
-  when /уменьшился на/
-    delta = expected.to_i - value2.to_i
-    unless delta < 0
-      actual.to_i.should eq(delta)
+  begin
+    case clause
+    when /увеличился на/
+      actual.to_i.should eq(expected.to_i + value1.to_i)
+    when /уменьшился на/
+      delta = expected.to_i - value2.to_i
+      unless delta < 0
+        actual.to_i.should eq(delta)
+      else
+        actual.to_i.should eq(0)
+      end
+    when "не изменился"
+      actual.to_i.should eq(expected.to_i)
     else
-      actual.to_i.should eq(0)
+      raise "Неизвестное условие: '#{clause}'"
     end
-  when "не изменился"
-    actual.to_i.should eq(expected.to_i)
-  else
-    raise "Неизвестное условие: '#{clause}'"
+  rescue RSpec::Expectations::ExpectationNotMetError => e
+    # Ошибка счетчиков - записываем, но не останавливаем
+    puts "Ошибка: <b><font color='red'><pre>#{e.message}</pre></font></b>"
   end
 end
 

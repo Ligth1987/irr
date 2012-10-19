@@ -114,7 +114,7 @@ def after_step(scenario)
 
     unless @last_step_time.nil?
       step_time = Time.now - @last_step_time
-      # Если шаг пройден более чем за 5 секунд - то выделим это в отчете
+      # Если шаг пройден более чем за 10 секунд - то выделим это в отчете
       if step_time > 10
         step_time = "<font color='red'>%.1f</font>" % step_time
       else
@@ -156,6 +156,7 @@ After do |scenario|
       Cucumber.wants_to_quit = true
     end
   end
+
 end
 
 if(FAIL_FAST)
