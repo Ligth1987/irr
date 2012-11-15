@@ -9,7 +9,7 @@ class CategoryCarsPartsDisksPage < AdDetailsPage
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "condition_c"
   irr_multi_select "Тип дисков", "diskstype"
-  irr_multi_select "Произодитель", "producer_disks"
+  irr_multi_select "Производитель", "producer_disks"
   irr_multi_select "Диаметр обода", "diameter_obod"
   irr_multi_select "Ширина обода", "width_disks"
   irr_multi_select "Число болтов", "bolt"
